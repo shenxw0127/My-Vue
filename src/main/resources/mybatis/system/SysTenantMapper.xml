@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.mapper.SysTenantMapper">
+
+    <resultMap type="com.ruoyi.project.system.domain.SysTenant" id="SysTenantResult">
+        <id property="tenantId" column="tenant_id"/>
+        <result property="tenantName" column="tenant_name"/>
+        <result property="contactPerson" column="contact_person"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="admin" column="admin"/>
+        <!-- Add other tenant properties here -->
+    </resultMap>
+
+    <!-- 查询租户列表 -->
+    <select id="selectTenantList" parameterType="com.ruoyi.project.system.domain.SysTenant" resultMap="SysTenantResult">
+        SELECT
+        tenant_id,
+        tenant_name,
+        contact_person,
+        phone_number,
+        admin
+        FROM sys_tenant
+        WHERE 1=1
+        <if test="tenantName != null and tenantName != ''">
+            AND tenant_name LIKE CONCAT('%', #{tenantName}, '%')
+        </if>
+        <if test="contactPerson != null and contactPerson != ''">
+            AND contact_person LIKE CONCAT('%', #{contactPerson}, '%')
+        </if>
+        <if test="phoneNumber != null and phoneNumber != ''">
+            AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
+        </if>
+        <if test="admin != null and admin != ''">
+            AND admin LIKE CONCAT('%', #{admin}, '%')
+        </if>
+    </select>
+
+    <!-- 根据ID查询租户 -->
+    <select id="selectTenantById" parameterType="long" resultMap="SysTenantResult">
+        SELECT
+            tenant_id,
+            tenant_name,
+            contact_person,
+            phone_number,
+            admin
+        FROM sys_tenant
+        WHERE tenant_id = #{tenantId}
+    </select>
+
+    <!-- 新增租户 -->
+    <insert id="insertTenant" parameterType="com.ruoyi.project.system.domain.SysTenant" useGeneratedKeys="true" keyProperty="tenantId">
+        INSERT INTO sys_tenant (
+            tenant_name,
+            contact_person,
+            phone_number,
+            admin
+        ) VALUES (
+                     #{tenantName},
+                     #{contactPerson},
+                     #{phoneNumber},
+                     #{admin}
+                 )
+    </insert>
+
+    <!-- 更新租户 -->
+    <update id="updateTenant" parameterType="com.ruoyi.project.system.domain.SysTenant">
+        UPDATE sys_tenant
+        SET
+            tenant_name = #{tenantName},
+            contact_person = #{contactPerson},
+            phone_number = #{phoneNumber},
+            admin = #{admin}
+        WHERE tenant_id = #{tenantId}
+    </update>
+
+    <!-- 根据ID删除租户 -->
+    <delete id="deleteTenantById" parameterType="long">
+        DELETE FROM sys_tenant WHERE tenant_id = #{tenantId}
+    </delete>
+
+    <!-- 批量删除租户 -->
+    <delete id="deleteTenantByIds" parameterType="long[]">
+        DELETE FROM sys_tenant WHERE tenant_id IN
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 检查租户名称是否唯一 -->
+    <select id="checkTenantNameUnique" parameterType="String" resultType="int">
+        SELECT COUNT(1)
+        FROM sys_tenant
+        WHERE tenant_name = #{tenantName}
+    </select>
+
+</mapper>
