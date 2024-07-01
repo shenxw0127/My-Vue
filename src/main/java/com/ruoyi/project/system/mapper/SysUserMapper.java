@@ -54,6 +54,13 @@ public interface SysUserMapper
     public SysUser selectUserById(Long userId);
 
     /**
+     * 通过创建者查询用户
+     *
+     * @param creator 创建者名称
+     * @return 用户和岗位关联列表
+     */
+    public List<SysUser> selectUserListByCreator(String creator);
+    /**
      * 新增用户信息
      * 
      * @param user 用户信息

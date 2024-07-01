@@ -9,6 +9,7 @@ import com.ruoyi.framework.web.page.TableDataInfo;
 import com.ruoyi.project.system.domain.SysDept;
 import com.ruoyi.project.system.domain.SysTenant;
 import com.ruoyi.project.system.service.ISysDeptService;
+import com.ruoyi.project.system.service.ISysRoleService;
 import com.ruoyi.project.system.service.ISysTenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +32,9 @@ public class SysTenantController extends BaseController
 
     @Autowired
     private ISysDeptService deptService;
+
+    @Autowired
+    private ISysRoleService roleService;
 
     /**
      * 获取租户列表
@@ -83,6 +87,9 @@ public class SysTenantController extends BaseController
         adminUser.setPhonenumber(tenant.getPhoneNumber());
         adminUser.setNickName("租户管理员");
         adminUser.setDeptId(tenant.getTenantId());
+        adminUser.setRoleIds(new Long[]{100L});
+        //赋值admin
+        adminUser.setCreateBy(SecurityUtils.getUsername());
         userService.insertUser(adminUser);
 
 

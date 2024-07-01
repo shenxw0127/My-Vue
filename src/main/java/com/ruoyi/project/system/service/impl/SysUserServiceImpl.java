@@ -7,6 +7,7 @@ import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -75,7 +76,23 @@ public class SysUserServiceImpl implements ISysUserService
     @DataScope(deptAlias = "d", userAlias = "u")
     public List<SysUser> selectUserList(SysUser user)
     {
-        return userMapper.selectUserList(user);
+//        return userMapper.selectUserList(user);
+        //如果当前用户是admin，那么就查询所有用户
+        if (SecurityUtils.isAdmin(SecurityUtils.getUserId()))
+        {
+            //打印“是管理员”
+            System.out.println("是管理员");
+            return userMapper.selectUserList(user);
+        }else{
+            //如果当前用户不是admin，那么就查询当前用户创建的用户和当前用户
+            System.out.println("不是管理员");
+
+            String userName = SecurityUtils.getUsername();
+            SysUser sysUser = userMapper.selectUserByUserName(userName);
+            List<SysUser> sysUsers = userMapper.selectUserListByCreator(SecurityUtils.getUsername());
+            sysUsers.add(sysUser);
+            return sysUsers;
+        }
     }
 
     /**
