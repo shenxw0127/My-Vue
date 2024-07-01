@@ -1,5 +1,3 @@
-USE vue;
-
 -- ----------------------------
 -- 1、部门表
 -- ----------------------------
@@ -160,28 +158,30 @@ create table sys_menu (
 -- ----------------------------
 -- 一级菜单
 insert into sys_menu values('1', '系统管理', '0', '1', 'system',           null, '', 1, 0, 'M', '0', '0', '', 'system',   'admin', sysdate(), '', null, '系统管理目录');
-# insert into sys_menu values('2', '系统监控', '0', '2', 'monitor',          null, '', 1, 0, 'M', '0', '0', '', 'monitor',  'admin', sysdate(), '', null, '系统监控目录');
+insert into sys_menu values('2', '系统监控', '0', '2', 'monitor',          null, '', 1, 0, 'M', '0', '0', '', 'monitor',  'admin', sysdate(), '', null, '系统监控目录');
+insert into sys_menu values('3', '系统工具', '0', '3', 'tool',             null, '', 1, 0, 'M', '0', '0', '', 'tool',     'admin', sysdate(), '', null, '系统工具目录');
+insert into sys_menu values('4', '若依官网', '0', '4', 'http://ruoyi.vip', null, '', 0, 0, 'M', '0', '0', '', 'guide',    'admin', sysdate(), '', null, '若依官网地址');
 -- 二级菜单
 insert into sys_menu values('100',  '用户管理', '1',   '1', 'user',       'system/user/index',        '', 1, 0, 'C', '0', '0', 'system:user:list',        'user',          'admin', sysdate(), '', null, '用户管理菜单');
 insert into sys_menu values('101',  '角色管理', '1',   '2', 'role',       'system/role/index',        '', 1, 0, 'C', '0', '0', 'system:role:list',        'peoples',       'admin', sysdate(), '', null, '角色管理菜单');
 insert into sys_menu values('102',  '菜单管理', '1',   '3', 'menu',       'system/menu/index',        '', 1, 0, 'C', '0', '0', 'system:menu:list',        'tree-table',    'admin', sysdate(), '', null, '菜单管理菜单');
 insert into sys_menu values('103',  '部门管理', '1',   '4', 'dept',       'system/dept/index',        '', 1, 0, 'C', '0', '0', 'system:dept:list',        'tree',          'admin', sysdate(), '', null, '部门管理菜单');
-# insert into sys_menu values('104',  '岗位管理', '1',   '5', 'post',       'system/post/index',        '', 1, 0, 'C', '0', '0', 'system:post:list',        'post',          'admin', sysdate(), '', null, '岗位管理菜单');
-# insert into sys_menu values('105',  '字典管理', '1',   '6', 'dict',       'system/dict/index',        '', 1, 0, 'C', '0', '0', 'system:dict:list',        'dict',          'admin', sysdate(), '', null, '字典管理菜单');
-# insert into sys_menu values('106',  '参数设置', '1',   '7', 'config',     'system/config/index',      '', 1, 0, 'C', '0', '0', 'system:config:list',      'edit',          'admin', sysdate(), '', null, '参数设置菜单');
+insert into sys_menu values('104',  '岗位管理', '1',   '5', 'post',       'system/post/index',        '', 1, 0, 'C', '0', '0', 'system:post:list',        'post',          'admin', sysdate(), '', null, '岗位管理菜单');
+insert into sys_menu values('105',  '字典管理', '1',   '6', 'dict',       'system/dict/index',        '', 1, 0, 'C', '0', '0', 'system:dict:list',        'dict',          'admin', sysdate(), '', null, '字典管理菜单');
+insert into sys_menu values('106',  '参数设置', '1',   '7', 'config',     'system/config/index',      '', 1, 0, 'C', '0', '0', 'system:config:list',      'edit',          'admin', sysdate(), '', null, '参数设置菜单');
 insert into sys_menu values('107',  '通知公告', '1',   '8', 'notice',     'system/notice/index',      '', 1, 0, 'C', '0', '0', 'system:notice:list',      'message',       'admin', sysdate(), '', null, '通知公告菜单');
-# insert into sys_menu values('108',  '日志管理', '1',   '9', 'log',        '',                         '', 1, 0, 'M', '0', '0', '',                        'log',           'admin', sysdate(), '', null, '日志管理菜单');
-# insert into sys_menu values('109',  '在线用户', '2',   '1', 'online',     'monitor/online/index',     '', 1, 0, 'C', '0', '0', 'monitor:online:list',     'online',        'admin', sysdate(), '', null, '在线用户菜单');
-# insert into sys_menu values('110',  '定时任务', '2',   '2', 'job',        'monitor/job/index',        '', 1, 0, 'C', '0', '0', 'monitor:job:list',        'job',           'admin', sysdate(), '', null, '定时任务菜单');
-# insert into sys_menu values('111',  '数据监控', '2',   '3', 'druid',      'monitor/druid/index',      '', 1, 0, 'C', '0', '0', 'monitor:druid:list',      'druid',         'admin', sysdate(), '', null, '数据监控菜单');
-# insert into sys_menu values('112',  '服务监控', '2',   '4', 'server',     'monitor/server/index',     '', 1, 0, 'C', '0', '0', 'monitor:server:list',     'server',        'admin', sysdate(), '', null, '服务监控菜单');
-# insert into sys_menu values('113',  '缓存监控', '2',   '5', 'cache',      'monitor/cache/index',      '', 1, 0, 'C', '0', '0', 'monitor:cache:list',      'redis',         'admin', sysdate(), '', null, '缓存监控菜单');
-# insert into sys_menu values('114',  '缓存列表', '2',   '6', 'cacheList',  'monitor/cache/list',       '', 1, 0, 'C', '0', '0', 'monitor:cache:list',      'redis-list',    'admin', sysdate(), '', null, '缓存列表菜单');
-# insert into sys_menu values('115',  '表单构建', '3',   '1', 'build',      'tool/build/index',         '', 1, 0, 'C', '0', '0', 'tool:build:list',         'build',         'admin', sysdate(), '', null, '表单构建菜单');
-# insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',        'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
-# insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',    'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
-# 118,租户管理,1,10,tenant,system/tenant/index,"",1,0,C,0,0,system:tenant:list,download,admin,2024-06-30 08:00:44,admin,2024-06-30 08:05:21,租户管理菜单
+insert into sys_menu values('108',  '日志管理', '1',   '9', 'log',        '',                         '', 1, 0, 'M', '0', '0', '',                        'log',           'admin', sysdate(), '', null, '日志管理菜单');
+insert into sys_menu values('109',  '在线用户', '2',   '1', 'online',     'monitor/online/index',     '', 1, 0, 'C', '0', '0', 'monitor:online:list',     'online',        'admin', sysdate(), '', null, '在线用户菜单');
+insert into sys_menu values('110',  '定时任务', '2',   '2', 'job',        'monitor/job/index',        '', 1, 0, 'C', '0', '0', 'monitor:job:list',        'job',           'admin', sysdate(), '', null, '定时任务菜单');
+insert into sys_menu values('111',  '数据监控', '2',   '3', 'druid',      'monitor/druid/index',      '', 1, 0, 'C', '0', '0', 'monitor:druid:list',      'druid',         'admin', sysdate(), '', null, '数据监控菜单');
+insert into sys_menu values('112',  '服务监控', '2',   '4', 'server',     'monitor/server/index',     '', 1, 0, 'C', '0', '0', 'monitor:server:list',     'server',        'admin', sysdate(), '', null, '服务监控菜单');
+insert into sys_menu values('113',  '缓存监控', '2',   '5', 'cache',      'monitor/cache/index',      '', 1, 0, 'C', '0', '0', 'monitor:cache:list',      'redis',         'admin', sysdate(), '', null, '缓存监控菜单');
+insert into sys_menu values('114',  '缓存列表', '2',   '6', 'cacheList',  'monitor/cache/list',       '', 1, 0, 'C', '0', '0', 'monitor:cache:list',      'redis-list',    'admin', sysdate(), '', null, '缓存列表菜单');
+insert into sys_menu values('115',  '表单构建', '3',   '1', 'build',      'tool/build/index',         '', 1, 0, 'C', '0', '0', 'tool:build:list',         'build',         'admin', sysdate(), '', null, '表单构建菜单');
+insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',        'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
+insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',    'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
 insert into sys_menu values('118',  '租户管理', '1',   '0', 'tenant',    'system/tenant/index',       '', 1, 0, 'C', '0', '0', 'system:tenant:list',       'peoples',      'admin', sysdate(), '', null, '租户管理菜单');
+insert into sys_menu values('119',  '课程管理', '1',  '10', 'course',     'system/course/index',      '', 1, 0, 'C', '0', '0', 'system:course:list',      'course',        'admin', sysdate(), '', null, '课程管理菜单');-- 三级菜单
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    '', 1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');
@@ -724,17 +724,45 @@ create table gen_table_column (
 # private Long tenantId;
 drop table if exists sys_tenant;
 create table sys_tenant (
-#     tenant_id从666666开始自增
-    tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
-    tenant_name     varchar(100)    default ''                 comment '租户名称',
-    contact_person  varchar(100)    default ''                 comment '联系人',
-    phone_number    varchar(100)    default ''                 comment '联系电话',
-    admin           varchar(100)    default ''                 comment '管理员',
-    create_by       varchar(64)     default ''                 comment '创建者',
-    create_time     datetime                                   comment '创建时间',
-    update_by       varchar(64)     default ''                 comment '更新者',
-    update_time     datetime                                   comment '更新时间',
-    remark          varchar(500)    default null               comment '备注',
-    primary key (tenant_id)
+                            #     tenant_id从666666开始自增
+                                tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
+                            tenant_name     varchar(100)    default ''                 comment '租户名称',
+                            contact_person  varchar(100)    default ''                 comment '联系人',
+                            phone_number    varchar(100)    default ''                 comment '联系电话',
+                            admin           varchar(100)    default ''                 comment '管理员',
+                            create_by       varchar(64)     default ''                 comment '创建者',
+                            create_time     datetime                                   comment '创建时间',
+                            update_by       varchar(64)     default ''                 comment '更新者',
+                            update_time     datetime                                   comment '更新时间',
+                            remark          varchar(500)    default null               comment '备注',
+                            primary key (tenant_id)
 ) engine=innodb auto_increment=100000 comment = '租户管理业务表';
+-- ----------------------------
+-- 21、课程信息表
+-- ----------------------------
+drop table if exists sys_course;
+create table sys_course
+(
+    course_id          bigint(20)      not null auto_increment    comment '课程ID',
+    course_name        varchar(100)    not null                   comment '课程名称',
+    course_description varchar(500)    default ''                 comment '课程简介',
+    course_cover       varchar(255)    default ''                 comment '课程封面',
+    course_video       varchar(255)    default ''                 comment '课程视频',
+    course_author      varchar(100)    default ''                 comment '课程作者',
+    course_sort        int(4)          default 0                  comment '课程排序',
+    create_by          varchar(64)     default ''                 comment '创建者',
+    create_time        datetime                                   comment '创建时间',
+    update_by          varchar(64)     default ''                 comment '更新者',
+    update_time        datetime                                   comment '更新时间',
+    remark             varchar(500)    default null               comment '备注',
+    primary key (course_id)
+) engine=innodb auto_increment=1 comment = '课程信息表';
 
+-- ----------------------------
+-- 初始化-课程信息表数据
+-- --------------------------
+
+INSERT INTO sys_course (course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark)
+VALUES
+    ('Java基础入门', 'Java基础入门课程，适合初学者', '/images/java.jpg', '/videos/java.mp4', '张三', 1, 'admin', sysdate(), '', null, '基础课程'),
+    ('Python进阶', 'Python进阶课程，适合有一定基础的学习者', '/images/python.jpg', '/videos/python.mp4', '李四', 2, 'admin', sysdate(), '', null, '进阶课程');
