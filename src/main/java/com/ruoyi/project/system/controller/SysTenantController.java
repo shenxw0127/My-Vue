@@ -1,16 +1,21 @@
 package com.ruoyi.project.system.controller;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.framework.aspectj.lang.annotation.Log;
 import com.ruoyi.framework.aspectj.lang.enums.BusinessType;
 import com.ruoyi.framework.web.controller.BaseController;
 import com.ruoyi.framework.web.domain.AjaxResult;
 import com.ruoyi.framework.web.page.TableDataInfo;
+import com.ruoyi.project.system.domain.SysDept;
 import com.ruoyi.project.system.domain.SysTenant;
+import com.ruoyi.project.system.service.ISysDeptService;
 import com.ruoyi.project.system.service.ISysTenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import com.ruoyi.project.system.domain.SysUser;
+import com.ruoyi.project.system.service.ISysUserService;
 
 import java.util.List;
 
@@ -20,6 +25,12 @@ public class SysTenantController extends BaseController
 {
     @Autowired
     private ISysTenantService tenantService;
+
+    @Autowired
+    private ISysUserService userService;
+
+    @Autowired
+    private ISysDeptService deptService;
 
     /**
      * 获取租户列表
@@ -56,6 +67,26 @@ public class SysTenantController extends BaseController
     @PostMapping
     public AjaxResult add(@Validated @RequestBody SysTenant tenant)
     {
+        tenant.setTenantId((long) (Math.random() * 900000 + 100000));
+
+        SysDept dept = new SysDept();
+        dept.setDeptName(tenant.getTenantName());
+        dept.setLeader(tenant.getContactPerson());
+        dept.setPhone(tenant.getPhoneNumber());
+        dept.setParentId(100L);
+        dept.setDeptId(tenant.getTenantId());
+        deptService.insertDept(dept);
+
+        SysUser adminUser = new SysUser();
+        adminUser.setUserName(tenant.getAdmin());
+        adminUser.setPassword(SecurityUtils.encryptPassword(tenant.getTenantId().toString()));
+        adminUser.setPhonenumber(tenant.getPhoneNumber());
+        adminUser.setNickName("租户管理员");
+        adminUser.setDeptId(tenant.getTenantId());
+        userService.insertUser(adminUser);
+
+
+        tenant.setAdminUser(adminUser);
         return toAjax(tenantService.insertTenant(tenant));
     }
 

@@ -25,7 +25,7 @@ create table sys_dept (
 -- ----------------------------
 -- 初始化-部门表数据
 -- ----------------------------
-insert into sys_dept values(100,  0,   '0',          '若依科技',   0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
+insert into sys_dept values(100,  0,   '0',          '测盟汇',   0, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into sys_dept values(101,  100, '0,100',      '深圳总公司', 1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into sys_dept values(102,  100, '0,100',      '长沙分公司', 2, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
 insert into sys_dept values(103,  101, '0,100,101',  '研发部门',   1, '若依', '15888888888', 'ry@qq.com', '0', '0', 'admin', sysdate(), '', null);
@@ -126,7 +126,7 @@ create table sys_role (
 -- ----------------------------
 insert into sys_role values('1', '超级管理员',  'admin',  1, 1, 1, 1, '0', '0', 'admin', sysdate(), '', null, '超级管理员');
 insert into sys_role values('2', '普通角色',    'common', 2, 2, 1, 1, '0', '0', 'admin', sysdate(), '', null, '普通角色');
-
+insert into sys_role values('100', '租户管理员', 'tenant', 3, 1, 1, 1, '0', '0', 'admin', sysdate(), '', null, '租户管理员');
 
 -- ----------------------------
 -- 5、菜单权限表
@@ -181,7 +181,7 @@ insert into sys_menu values('107',  '通知公告', '1',   '8', 'notice',     's
 # insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',        'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 # insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',    'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
 # 118,租户管理,1,10,tenant,system/tenant/index,"",1,0,C,0,0,system:tenant:list,download,admin,2024-06-30 08:00:44,admin,2024-06-30 08:05:21,租户管理菜单
-insert into sys_menu values('118',  '租户管理', '1',   '0', 'tenant',    'system/tenant/index',       '', 1, 0, 'C', '0', '0', 'system:tenant:list',       'download',      'admin', sysdate(), '', null, '租户管理菜单');
+insert into sys_menu values('118',  '租户管理', '1',   '0', 'tenant',    'system/tenant/index',       '', 1, 0, 'C', '0', '0', 'system:tenant:list',       'peoples',      'admin', sysdate(), '', null, '租户管理菜单');
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    '', 1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');
@@ -376,6 +376,20 @@ insert into sys_role_menu values ('2', '1057');
 insert into sys_role_menu values ('2', '1058');
 insert into sys_role_menu values ('2', '1059');
 insert into sys_role_menu values ('2', '1060');
+insert into sys_role_menu values('100', '1');
+insert into sys_role_menu values('100', '100');
+insert into sys_role_menu values('100', '107');
+insert into sys_role_menu values('100', '1000');
+insert into sys_role_menu values('100', '1001');
+insert into sys_role_menu values('100', '1002');
+insert into sys_role_menu values('100', '1003');
+insert into sys_role_menu values('100', '1004');
+insert into sys_role_menu values('100', '1005');
+insert into sys_role_menu values('100', '1006');
+insert into sys_role_menu values('100', '1035');
+insert into sys_role_menu values('100', '1036');
+insert into sys_role_menu values('100', '1037');
+insert into sys_role_menu values('100', '1038');
 
 -- ----------------------------
 -- 8、角色和部门关联表  角色1-N部门
@@ -710,6 +724,7 @@ create table gen_table_column (
 # private Long tenantId;
 drop table if exists sys_tenant;
 create table sys_tenant (
+#     tenant_id从666666开始自增
     tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
     tenant_name     varchar(100)    default ''                 comment '租户名称',
     contact_person  varchar(100)    default ''                 comment '联系人',
@@ -721,5 +736,5 @@ create table sys_tenant (
     update_time     datetime                                   comment '更新时间',
     remark          varchar(500)    default null               comment '备注',
     primary key (tenant_id)
-) engine=innodb auto_increment=1 comment = '租户管理业务表';
+) engine=innodb auto_increment=100000 comment = '租户管理业务表';
 

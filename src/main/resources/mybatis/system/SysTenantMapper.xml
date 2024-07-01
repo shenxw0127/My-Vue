@@ -52,11 +52,13 @@
     <!-- 新增租户 -->
     <insert id="insertTenant" parameterType="com.ruoyi.project.system.domain.SysTenant" useGeneratedKeys="true" keyProperty="tenantId">
         INSERT INTO sys_tenant (
+            tenant_id,
             tenant_name,
             contact_person,
             phone_number,
             admin
         ) VALUES (
+                        #{tenantId},
                      #{tenantName},
                      #{contactPerson},
                      #{phoneNumber},

@@ -11,6 +11,8 @@ public class SysTenant {
     private String phoneNumber;
     private String admin;
     private Long tenantId;
+    private SysUser adminUser;
+
 
     // getters and setters
     public String getTenantName() {
@@ -53,6 +55,13 @@ public class SysTenant {
         this.tenantId = tenantId;
     }
 
+    public SysUser getAdminUser() {
+        return adminUser;
+    }
+
+    public void setAdminUser(SysUser adminUser) {
+        this.adminUser = adminUser;
+    }
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
