@@ -1,3 +1,4 @@
+use vue;
 -- ----------------------------
 -- 1、部门表
 -- ----------------------------
@@ -724,8 +725,7 @@ create table gen_table_column (
 # private Long tenantId;
 drop table if exists sys_tenant;
 create table sys_tenant (
-                            #     tenant_id从666666开始自增
-                                tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
+                            tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
                             tenant_name     varchar(100)    default ''                 comment '租户名称',
                             contact_person  varchar(100)    default ''                 comment '联系人',
                             phone_number    varchar(100)    default ''                 comment '联系电话',
@@ -734,7 +734,8 @@ create table sys_tenant (
                             create_time     datetime                                   comment '创建时间',
                             update_by       varchar(64)     default ''                 comment '更新者',
                             update_time     datetime                                   comment '更新时间',
-                            remark          varchar(500)    default null               comment '备注',
+                            remark          longtext        default null               comment '备注',
+                            icon            longtext        default null               comment '租户图标',
                             primary key (tenant_id)
 ) engine=innodb auto_increment=100000 comment = '租户管理业务表';
 -- ----------------------------
@@ -746,7 +747,7 @@ create table sys_course
     course_id          bigint(20)      not null auto_increment    comment '课程ID',
     course_name        varchar(100)    not null                   comment '课程名称',
     course_description varchar(500)    default ''                 comment '课程简介',
-    course_cover       varchar(255)    default ''                 comment '课程封面',
+    course_cover       longtext        default null                 comment '课程封面',
     course_video       varchar(255)    default ''                 comment '课程视频',
     course_author      varchar(100)    default ''                 comment '课程作者',
     course_sort        int(4)          default 0                  comment '课程排序',

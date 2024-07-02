@@ -12,6 +12,8 @@ public class SysTenant {
     private String admin;
     private Long tenantId;
     private SysUser adminUser;
+    private String icon;
+    private String remark;
 
 
     // getters and setters
@@ -61,6 +63,22 @@ public class SysTenant {
 
     public void setAdminUser(SysUser adminUser) {
         this.adminUser = adminUser;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
     @Override
     public String toString() {

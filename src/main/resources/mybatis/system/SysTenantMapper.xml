@@ -20,7 +20,9 @@
         tenant_name,
         contact_person,
         phone_number,
-        admin
+        admin,
+        remark,
+        icon
         FROM sys_tenant
         WHERE 1=1
         <if test="tenantName != null and tenantName != ''">
@@ -44,7 +46,9 @@
             tenant_name,
             contact_person,
             phone_number,
-            admin
+            admin,
+            remark,
+            icon
         FROM sys_tenant
         WHERE tenant_id = #{tenantId}
     </select>
@@ -56,13 +60,17 @@
             tenant_name,
             contact_person,
             phone_number,
-            admin
+            admin,
+            remark,
+            icon
         ) VALUES (
                         #{tenantId},
                      #{tenantName},
                      #{contactPerson},
                      #{phoneNumber},
-                     #{admin}
+                     #{admin},
+                     #{remark},
+                     #{icon}
                  )
     </insert>
 
@@ -73,7 +81,9 @@
             tenant_name = #{tenantName},
             contact_person = #{contactPerson},
             phone_number = #{phoneNumber},
-            admin = #{admin}
+            admin = #{admin},
+            remark = #{remark},
+            icon = #{icon}
         WHERE tenant_id = #{tenantId}
     </update>
 
