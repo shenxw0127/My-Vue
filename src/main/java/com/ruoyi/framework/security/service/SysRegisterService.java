@@ -1,5 +1,10 @@
 package com.ruoyi.framework.security.service;
 
+import com.ruoyi.framework.web.domain.server.Sys;
+import com.ruoyi.project.system.domain.SysDept;
+import com.ruoyi.project.system.domain.SysTenant;
+import com.ruoyi.project.system.service.ISysDeptService;
+import com.ruoyi.project.system.service.ISysTenantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.ruoyi.common.constant.CacheConstants;
@@ -35,21 +40,45 @@ public class SysRegisterService
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private ISysTenantService sysTenantService;
+
+    @Autowired
+    private ISysDeptService sysDeptService;
+
     /**
      * 注册
      */
     public String register(RegisterBody registerBody)
     {
         String msg = "", username = registerBody.getUsername(), password = registerBody.getPassword();
+        String email = registerBody.getEmail(), phone = registerBody.getPhoneNumber(),
+                sex = registerBody.getSex(), remark = registerBody.getRemark();
+        String tenantName = registerBody.getTenantName(), contactPerson = registerBody.getContactPerson();
+        //打印
+        System.out.println("username: " + username);
+        System.out.println("password: " + password);
+        System.out.println("email: " + email);
+        System.out.println("phone: " + phone);
+        System.out.println("sex: " + sex);
+        System.out.println("remark: " + remark);
+        System.out.println("tenantName: " + tenantName);
+        System.out.println("contactPerson: " + contactPerson);
+
         SysUser sysUser = new SysUser();
+        SysTenant sysTenant = new SysTenant();
+        SysDept sysDept = new SysDept();
+        sysTenant.setTenantId((long) (Math.random() * 900000 + 100000));
+        sysDept.setDeptId(sysTenant.getTenantId());
+
         sysUser.setUserName(username);
 
         // 验证码开关
-        boolean captchaEnabled = configService.selectCaptchaEnabled();
-        if (captchaEnabled)
-        {
-            validateCaptcha(username, registerBody.getCode(), registerBody.getUuid());
-        }
+//        boolean captchaEnabled = configService.selectCaptchaEnabled();
+//        if (captchaEnabled)
+//        {
+//            validateCaptcha(username, registerBody.getCode(), registerBody.getUuid());
+//        }
 
         if (StringUtils.isEmpty(username))
         {
@@ -77,7 +106,31 @@ public class SysRegisterService
         {
             sysUser.setNickName(username);
             sysUser.setPassword(SecurityUtils.encryptPassword(password));
+            sysUser.setPhonenumber(phone);
+            sysUser.setRemark(remark);
+            sysUser.setEmail(email);
+            sysUser.setSex(sex);
+            sysUser.setNickName("租户管理员");
+            sysUser.setDeptId(sysTenant.getTenantId());
+            sysUser.setRoleIds(new Long[]{100L});
             boolean regFlag = userService.registerUser(sysUser);
+
+            sysTenant.setAdmin(username);
+            sysTenant.setContactPerson(contactPerson);
+            sysTenant.setPhoneNumber(phone);
+            sysTenant.setTenantName(tenantName);
+            sysTenantService.insertTenant(sysTenant);
+
+            sysDept.setPhone(phone);
+            sysDept.setDeptName(tenantName);
+            sysDept.setLeader(contactPerson);
+            sysDept.setParentId(100L);
+            sysDept.setEmail(email);
+            sysDeptService.insertDept(sysDept);
+
+//            msg = "注册失败,请联系系统管理人员";
+//
+//            boolean regFlag = userService.registerUser(sysUser);
             if (!regFlag)
             {
                 msg = "注册失败,请联系系统管理人员";
