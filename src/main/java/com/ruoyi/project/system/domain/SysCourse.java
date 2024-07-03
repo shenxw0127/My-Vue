@@ -49,6 +49,10 @@ public class SysCourse extends BaseEntity {
     @Excel(name = "备注")
     private String remark;
 
+    /** 审核状态 */
+    @NotNull(message = "审核状态不能为空")
+    private Boolean auditStatus;
+
     public Long getCourseId() {
         return courseId;
     }
@@ -118,6 +122,15 @@ public class SysCourse extends BaseEntity {
         return remark;
     }
 
+    // Getters and setters
+    public Boolean getAuditStatus() {
+        return auditStatus;
+    }
+
+    public void setAuditStatus(Boolean auditStatus) {
+        this.auditStatus = auditStatus;
+    }
+
     public void setRemark(String remark) {
         this.remark = remark;
     }
@@ -138,6 +151,7 @@ public class SysCourse extends BaseEntity {
                 .append("updateBy", getUpdateBy())
                 .append("updateTime", getUpdateTime())
                 .append("remark", getRemark())
+                .append("auditStatus", getAuditStatus())
                 .toString();
     }
 }

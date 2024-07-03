@@ -105,4 +105,34 @@ public class SysCourseController extends BaseController {
         List<SysCourse> courses = courseService.selectCourseAll();
         return success(courses);
     }
+    /**
+     * 审核课程
+     */
+    @PreAuthorize("@ss.hasPermi('system:course:audit')")
+    @Log(title = "课程管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/audit/{courseId}")
+    public AjaxResult auditCourse(@PathVariable Long courseId) {
+        SysCourse course = courseService.selectCourseById(courseId);
+        if (course == null) {
+            return error("课程不存在");
+        }
+        course.setAuditStatus(true);
+        return toAjax(courseService.updateCourse(course));
+    }
+
+    /**
+     * 取消审核课程
+     */
+    @PreAuthorize("@ss.hasPermi('system:course:audit')")
+    @Log(title = "课程管理", businessType = BusinessType.UPDATE)
+    @PutMapping("/unaudit/{courseId}")
+    public AjaxResult unauditCourse(@PathVariable Long courseId) {
+        SysCourse course = courseService.selectCourseById(courseId);
+        if (course == null) {
+            return error("课程不存在");
+        }
+        course.setAuditStatus(false);
+        return toAjax(courseService.updateCourse(course));
+    }
+
 }

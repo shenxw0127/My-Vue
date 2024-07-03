@@ -17,10 +17,11 @@
         <result property="updateBy"        column="update_by"       />
         <result property="updateTime"      column="update_time"     />
         <result property="remark"          column="remark"          />
+        <result property="auditStatus"     column="audit_status"    />
     </resultMap>
 
     <sql id="selectCourseVo">
-        select course_id, course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark
+        select course_id, course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark, audit_status
         from sys_course
     </sql>
 
@@ -32,6 +33,9 @@
             </if>
             <if test="courseAuthor != null and courseAuthor != ''">
                 AND course_author like concat('%', #{courseAuthor}, '%')
+            </if>
+            <if test="auditStatus != null">
+                AND audit_status = #{auditStatus}
             </if>
         </where>
     </select>
@@ -46,7 +50,7 @@
     </select>
 
     <select id="checkCourseNameUnique" parameterType="String" resultType="SysCourse">
-        select course_id, course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark
+        select course_id, course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark, audit_status
         from sys_course
         where course_name = #{courseName}
             limit 1
@@ -62,6 +66,7 @@
             <if test="courseAuthor != null and courseAuthor != ''">course_author = #{courseAuthor},</if>
             <if test="courseSort != null">course_sort = #{courseSort},</if>
             <if test="remark != null">remark = #{remark},</if>
+            <if test="auditStatus != null">audit_status = #{auditStatus},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             update_time = sysdate()
         </set>
@@ -77,6 +82,7 @@
         <if test="courseAuthor != null and courseAuthor != ''">course_author,</if>
         <if test="courseSort != null">course_sort,</if>
         <if test="remark != null and remark != ''">remark,</if>
+        <if test="auditStatus != null">audit_status,</if>
         <if test="createBy != null and createBy != ''">create_by,</if>
         create_time
         ) values (
@@ -87,6 +93,7 @@
         <if test="courseAuthor != null and courseAuthor != ''">#{courseAuthor},</if>
         <if test="courseSort != null">#{courseSort},</if>
         <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="auditStatus != null">#{auditStatus},</if>
         <if test="createBy != null and createBy != ''">#{createBy},</if>
         sysdate()
         )

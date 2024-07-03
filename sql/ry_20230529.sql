@@ -182,10 +182,14 @@ insert into sys_menu values('115',  '表单构建', '3',   '1', 'build',      't
 insert into sys_menu values('116',  '代码生成', '3',   '2', 'gen',        'tool/gen/index',           '', 1, 0, 'C', '0', '0', 'tool:gen:list',           'code',          'admin', sysdate(), '', null, '代码生成菜单');
 insert into sys_menu values('117',  '系统接口', '3',   '3', 'swagger',    'tool/swagger/index',       '', 1, 0, 'C', '0', '0', 'tool:swagger:list',       'swagger',       'admin', sysdate(), '', null, '系统接口菜单');
 insert into sys_menu values('118',  '租户管理', '1',   '0', 'tenant',    'system/tenant/index',       '', 1, 0, 'C', '0', '0', 'system:tenant:list',       'peoples',      'admin', sysdate(), '', null, '租户管理菜单');
-insert into sys_menu values('119',  '课程管理', '1',  '10', 'course',     'system/course/index',      '', 1, 0, 'C', '0', '0', 'system:course:list',      'course',        'admin', sysdate(), '', null, '课程管理菜单');-- 三级菜单
+insert into sys_menu values('119',  '课程信息', '121','10', 'course',     'system/course/index',      '', 1, 0, 'C', '0', '0', 'system:course:list',      'edit',        'admin', sysdate(), '', null, '课程信息菜单');-- 三级菜单
+insert into sys_menu values('120',  '课程审核', '121','11', 'audit',      'system/course/audit',      '', 1, 0, 'C', '0', '0', 'system:course:audit',     'message',         'admin', sysdate(), '', null, '课程审核菜单');
+insert into sys_menu values('121',  '课程管理', '1',  '12', 'category',   '',                         '', 1, 0, 'M', '0', '0', '',                        'dict',    'admin', sysdate(), '', null, '课程管理菜单');
 -- 三级菜单
 insert into sys_menu values('500',  '操作日志', '108', '1', 'operlog',    'monitor/operlog/index',    '', 1, 0, 'C', '0', '0', 'monitor:operlog:list',    'form',          'admin', sysdate(), '', null, '操作日志菜单');
 insert into sys_menu values('501',  '登录日志', '108', '2', 'logininfor', 'monitor/logininfor/index', '', 1, 0, 'C', '0', '0', 'monitor:logininfor:list', 'logininfor',    'admin', sysdate(), '', null, '登录日志菜单');
+insert into sys_menu values('502',  '课程审核', '119', '1', 'audit',      'system/course/audit',      '', 1, 0, 'C', '0', '0', 'system:course:audit',     'audit',         'admin', sysdate(), '', null, '课程审核菜单');
+
 -- 用户管理按钮
 insert into sys_menu values('1000', '用户查询', '100', '1',  '', '', '', 1, 0, 'F', '0', '0', 'system:user:query',          '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1001', '用户新增', '100', '2',  '', '', '', 1, 0, 'F', '0', '0', 'system:user:add',            '#', 'admin', sysdate(), '', null, '');
@@ -260,6 +264,7 @@ insert into sys_menu values('1057', '生成删除', '116', '3', '#', '', '', 1, 
 insert into sys_menu values('1058', '导入代码', '116', '4', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:import',            '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1059', '预览代码', '116', '5', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:preview',           '#', 'admin', sysdate(), '', null, '');
 insert into sys_menu values('1060', '生成代码', '116', '6', '#', '', '', 1, 0, 'F', '0', '0', 'tool:gen:code',              '#', 'admin', sysdate(), '', null, '');
+
 
 
 -- ----------------------------
@@ -725,7 +730,8 @@ create table gen_table_column (
 # private Long tenantId;
 drop table if exists sys_tenant;
 create table sys_tenant (
-                            tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
+                            #     tenant_id从666666开始自增
+                                tenant_id       bigint(20)      not null auto_increment    comment '租户ID',
                             tenant_name     varchar(100)    default ''                 comment '租户名称',
                             contact_person  varchar(100)    default ''                 comment '联系人',
                             phone_number    varchar(100)    default ''                 comment '联系电话',
@@ -734,14 +740,29 @@ create table sys_tenant (
                             create_time     datetime                                   comment '创建时间',
                             update_by       varchar(64)     default ''                 comment '更新者',
                             update_time     datetime                                   comment '更新时间',
-                            remark          longtext        default null               comment '备注',
-                            icon            longtext        default null               comment '租户图标',
+                            remark          varchar(500)    default null               comment '备注',
                             primary key (tenant_id)
 ) engine=innodb auto_increment=100000 comment = '租户管理业务表';
 -- ----------------------------
 -- 21、课程信息表
 -- ----------------------------
 drop table if exists sys_course;
+CREATE TABLE sys_course (
+                                          course_id          BIGINT(20)      NOT NULL AUTO_INCREMENT    COMMENT '课程ID',
+                                          course_name        VARCHAR(100)    NOT NULL                   COMMENT '课程名称',
+                                          course_description VARCHAR(500)    DEFAULT ''                 COMMENT '课程简介',
+                                          course_cover       LONGTEXT                                   COMMENT '课程封面',
+                                          course_video       LONGTEXT                                   COMMENT '课程视频',
+                                          course_author      VARCHAR(100)    DEFAULT ''                 COMMENT '课程作者',
+                                          course_sort        INT(4)          DEFAULT 0                  COMMENT '课程排序',
+                                          create_by          VARCHAR(64)     DEFAULT ''                 COMMENT '创建者',
+                                          create_time        DATETIME                                   COMMENT '创建时间',
+                                          update_by          VARCHAR(64)     DEFAULT ''                 COMMENT '更新者',
+                                          update_time        DATETIME                                   COMMENT '更新时间',
+                                          remark             VARCHAR(500)    DEFAULT NULL               COMMENT '备注',
+                                          audit_status       BOOLEAN         DEFAULT FALSE              COMMENT '审核状态',
+                                          PRIMARY KEY (course_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 COMMENT = '课程信息表';
 create table sys_course
 (
     course_id          bigint(20)      not null auto_increment    comment '课程ID',
@@ -762,8 +783,7 @@ create table sys_course
 -- ----------------------------
 -- 初始化-课程信息表数据
 -- --------------------------
-
-INSERT INTO sys_course (course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark)
+INSERT INTO sys_course (course_name, course_description, course_cover, course_video, course_author, course_sort, create_by, create_time, update_by, update_time, remark, audit_status)
 VALUES
-    ('Java基础入门', 'Java基础入门课程，适合初学者', '/images/java.jpg', '/videos/java.mp4', '张三', 1, 'admin', sysdate(), '', null, '基础课程'),
-    ('Python进阶', 'Python进阶课程，适合有一定基础的学习者', '/images/python.jpg', '/videos/python.mp4', '李四', 2, 'admin', sysdate(), '', null, '进阶课程');
+    ('Java基础入门', 'Java基础入门课程，适合初学者', '/images/java.jpg', '/videos/java.mp4', '张三', 1, 'admin', sysdate(), '', null, '基础课程', false),
+    ('Python进阶', 'Python进阶课程，适合有一定基础的学习者', '/images/python.jpg', '/videos/python.mp4', '李四', 2, 'admin', sysdate(), '', null, '进阶课程', false);
