@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.mapper.SysMeetingMapper">
+
+    <resultMap type="SysMeeting" id="SysMeetingResult">
+        <id property="meetingId" column="meeting_id" />
+        <result property="meetingName" column="meeting_name" />
+        <result property="creator" column="creator" />
+        <result property="status" column="status" />
+        <result property="content" column="content" />
+        <result property="coverImage" column="cover_image" />
+        <result property="startTime" column="start_time" />
+        <result property="endTime" column="end_time" />
+        <result property="createTime" column="create_time" />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <sql id="selectMeetingVo">
+        SELECT meeting_id, meeting_name, creator, status, content, cover_image, start_time, end_time, create_time, update_time, remark
+        FROM sys_meeting
+    </sql>
+
+    <select id="selectMeetingList" parameterType="SysMeeting" resultMap="SysMeetingResult">
+        <include refid="selectMeetingVo"/>
+        <where>
+            <if test="meetingName != null and meetingName != ''">
+                AND meeting_name LIKE CONCAT('%', #{meetingName}, '%')
+            </if>
+            <if test="creator != null and creator != ''">
+                AND creator LIKE CONCAT('%', #{creator}, '%')
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
+            </if>
+            <if test="startTime != null">
+                AND start_time &gt;= #{startTime}
+            </if>
+            <if test="endTime != null">
+                AND end_time &lt;= #{endTime}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectMeetingById" parameterType="Long" resultMap="SysMeetingResult">
+        <include refid="selectMeetingVo"/>
+        WHERE meeting_id = #{meetingId}
+    </select>
+
+    <insert id="insertMeeting" parameterType="SysMeeting" useGeneratedKeys="true" keyProperty="meetingId">
+        INSERT INTO sys_meeting (
+            meeting_name, creator, status, content, cover_image, start_time, end_time, create_time, remark
+        ) VALUES (
+                     #{meetingName}, #{creator}, #{status}, #{content}, #{coverImage}, #{startTime}, #{endTime}, NOW(), #{remark}
+                 )
+    </insert>
+
+    <update id="updateMeeting" parameterType="SysMeeting">
+        UPDATE sys_meeting
+        <set>
+            <if test="meetingName != null">meeting_name = #{meetingName},</if>
+            <if test="creator != null">creator = #{creator},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="coverImage != null">cover_image = #{coverImage},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="endTime != null">end_time = #{endTime},</if>
+            update_time = NOW(),
+            <if test="remark != null">remark = #{remark}</if>
+        </set>
+        WHERE meeting_id = #{meetingId}
+    </update>
+
+    <delete id="deleteMeetingById" parameterType="Long">
+        DELETE FROM sys_meeting WHERE meeting_id = #{meetingId}
+    </delete>
+
+    <delete id="deleteMeetingByIds" parameterType="Long">
+        DELETE FROM sys_meeting WHERE meeting_id IN
+        <foreach collection="array" item="meetingId" open="(" separator="," close=")">
+            #{meetingId}
+        </foreach>
+    </delete>
+
+</mapper>
