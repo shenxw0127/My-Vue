@@ -50,7 +50,7 @@ public class SysCourse extends BaseEntity {
     private String remark;
 
     /** 审核状态 */
-    @NotNull(message = "审核状态不能为空")
+    @Excel(name = "审核状态", readConverterExp = "0=未审核,1=已审核")
     private Boolean auditStatus;
 
     public Long getCourseId() {
