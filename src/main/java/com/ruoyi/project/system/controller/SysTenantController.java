@@ -105,6 +105,7 @@ public class SysTenantController extends BaseController
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysTenant tenant)
     {
+        System.out.println(tenant.getRemark());
         return toAjax(tenantService.updateTenant(tenant));
     }
 
