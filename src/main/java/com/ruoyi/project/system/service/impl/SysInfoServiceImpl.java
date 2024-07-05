@@ -1,6 +1,9 @@
 package com.ruoyi.project.system.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.project.system.domain.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.common.constant.UserConstants;
@@ -25,7 +28,20 @@ public class SysInfoServiceImpl implements ISysInfoService {
      */
     @Override
     public List<SysInfo> selectInfoList(SysInfo info) {
-        return infoMapper.selectInfoList(info);
+//        return userMapper.selectUserList(user);
+        //如果当前用户是admin，那么就查询所有用户
+        if (SecurityUtils.isAdmin(SecurityUtils.getUserId())) {
+            //打印“是管理员”
+            System.out.println("是管理员");
+            return infoMapper.selectInfoList(info);
+        } else {
+            //如果当前用户不是admin，那么就查询当前用户创建的用户和当前用户
+            System.out.println("不是管理员");
+
+            String userName = SecurityUtils.getUsername();
+            List<SysInfo> sysInfos = infoMapper.selectInfoListByUserName(SecurityUtils.getUsername());
+            return sysInfos;
+        }
     }
 
     /**

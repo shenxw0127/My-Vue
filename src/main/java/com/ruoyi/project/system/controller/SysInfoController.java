@@ -66,12 +66,6 @@ public class SysInfoController extends BaseController {
         if (!infoService.checkInfoTitleUnique(info)) {
             return error("新增资讯'" + info.getTitle() + "'失败，资讯标题已存在");
         }
-        if (StringUtils.isEmpty(info.getAuthor())) {
-            return error("作者不能为空");
-        }
-        if (StringUtils.isEmpty(info.getTenant())) {
-            return error("租户不能为空");
-        }
         info.setCreateBy(getUsername());
         return toAjax(infoService.insertInfo(info));
     }

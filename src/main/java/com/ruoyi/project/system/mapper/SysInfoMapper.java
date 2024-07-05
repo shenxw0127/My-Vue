@@ -62,4 +62,6 @@ public interface SysInfoMapper {
      * @return 结果
      */
     public SysInfo checkInfoTitleUnique(String title);
+
+    List<SysInfo> selectInfoListByUserName(String username);
 }

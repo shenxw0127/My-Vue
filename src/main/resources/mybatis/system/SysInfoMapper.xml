@@ -98,4 +98,9 @@
         </foreach>
     </delete>
 
+    <!-- 通过用户名查询资讯信息列表 -->
+    <select id="selectInfoListByUserName" resultType="com.ruoyi.project.system.domain.SysInfo">
+        <include refid="selectInfoVo"/>
+        where tenant = #{userName}
+    </select>
 </mapper>
