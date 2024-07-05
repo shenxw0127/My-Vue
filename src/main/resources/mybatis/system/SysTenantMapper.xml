@@ -34,7 +34,7 @@
         <if test="phoneNumber != null and phoneNumber != ''">
             AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
         </if>
-        <if test="admin != null and admin != ''">
+        <if test="tenantId != null and tenantId != ''">
             AND tenant_id LIKE CONCAT('%', #{tenantId}, '%')
         </if>
     </select>
