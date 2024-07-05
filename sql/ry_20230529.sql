@@ -185,7 +185,7 @@ insert into sys_menu values('118',  '租户管理', '1',   '0', 'tenant',    'sy
 insert into sys_menu values('119',  '课程信息', '121','10', 'course',     'system/course/index',      '', 1, 0, 'C', '0', '0', 'system:course:list',      'edit',        'admin', sysdate(), '', null, '课程信息菜单');-- 三级菜单
 insert into sys_menu values('120',  '课程审核', '121','11', 'audit',      'system/course/audit',      '', 1, 0, 'C', '0', '0', 'system:course:audit',     'message',         'admin', sysdate(), '', null, '课程审核菜单');
 insert into sys_menu values('121',  '课程管理', '1',  '12', 'category',   '',                         '', 1, 0, 'M', '0', '0', '',                        'dict',    'admin', sysdate(), '', null, '课程管理菜单');
-insert into sys_menu values('122',  '资讯管理', '1',   '9', 'information',       'system/information/index',        '', 1, 0, 'C', '0', '0', 'system:information:list',        'job',       'admin', sysdate(), '', null, '资讯管理菜单');
+insert into sys_menu values('122',  '资讯管理', '1',   '9', 'information',       'system/information/index',        '', 1, 0, 'C', '0', '0', 'system:info:list',        'job',       'admin', sysdate(), '', null, '资讯管理菜单');
 insert into sys_menu values('123',  '会议管理', '1',   '5', 'meeting',       'system/meeting/index',        '', 1, 0, 'C', '0', '0', 'system:meeting:list',        'code',       'admin', sysdate(), '', null, '会议管理菜单');
 
 -- 三级菜单
